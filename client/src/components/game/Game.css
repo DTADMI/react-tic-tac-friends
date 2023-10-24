@@ -1,0 +1,11 @@
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    font-family: "Zen Tokyo Zoo", cursive;
+    position: relative;
+}
+
+.rowContainer {
+    width: 100%;
+    display: flex;
+}
