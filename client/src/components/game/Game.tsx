@@ -63,6 +63,8 @@ export interface IStopGame {
 }
 
 export function Game() {
+  const gameOverMessage = "Game Over! \n Click on the Replay button to play again!";
+  const [isGameOver, setGameOver] = useState(false);
   const [matrix, setMatrix] = useState<IPlayMatrix>([
     [null, null, null],
     [null, null, null],
@@ -142,9 +144,13 @@ export function Game() {
       const [currentPlayerWon, otherPlayerWon] = checkGameState(newMatrix);
       if (currentPlayerWon && otherPlayerWon) {
         gameService.gameWin(socketService.socket, "The Game is a TIE!");
+        setGameOver(true);
+        setGameMessage(gameOverMessage);
         alert("The Game is a TIE!");
       } else if (currentPlayerWon && !otherPlayerWon) {
         gameService.gameWin(socketService.socket, "You Lost!");
+        setGameOver(true);
+        setGameMessage(gameOverMessage);
         alert("You Won!");
       }
 
@@ -178,6 +184,8 @@ export function Game() {
       gameService.onGameWin(socketService.socket, (message) => {
         console.log("On Game Win", message);
         setPlayerTurn(false);
+        setGameOver(true);
+        setGameMessage(gameOverMessage);
         alert(message);
       });
     }
@@ -205,6 +213,7 @@ export function Game() {
       ]);
       setPlayerTurn(false);
       setGameRestarting(false);
+      setGameOver(false);
       alert(message + "\n It's your opponent turn now!");
       setGameMessage(message + "\n It's your turn now!");
     }
@@ -219,6 +228,7 @@ export function Game() {
           [null, null, null],
           [null, null, null],
         ]);
+        setGameOver(false);
         setPlayerTurn(true);
         alert(message);
         setGameMessage(message);
@@ -243,12 +253,14 @@ export function Game() {
   useEffect(() => {
     if(!isGameStarted) {
       setGameMessage("Waiting for the other player to join the room...")
-    } else if (isPlayerTurn) {
-      setGameMessage("Your turn to play!!!")
-    } else {
-      setGameMessage("Wait for your opponent's turn to play!!!")
+    } else if (!isGameOver) {
+      if(isPlayerTurn) {
+        setGameMessage("Your turn to play!!!")
+      } else {
+        setGameMessage("Wait for your opponent's turn to play!!!")
+      }
     }
-  },[isGameStarted, isPlayerTurn])
+  },[isGameStarted, isPlayerTurn, isGameOver])
 
   const playTurn = (column: string | null) => {
     if(!column || column === "null"){

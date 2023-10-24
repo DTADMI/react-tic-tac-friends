@@ -56,9 +56,6 @@ function App() {
                   className="d-flex align-items-center justify-content-center"
                   style={{ minHeight: "100vh"}}>
                 <div className="d-grid mt-2" style={{ maxWidth: "400px"}}>
-                  {/*<div className="w-100 h-10 p-3 mb-1 badge bg-primary text-wrap" style={{ maxWidth: "80%"}}>
-                    {gameMessage}
-                  </div>*/}
                   <Game />
                   <Button className="w-20 m-2" variant="primary" onClick={() => handleReplay()}>
                     Play again
