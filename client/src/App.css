@@ -59,3 +59,18 @@
   justify-content: center;
   background-image: url("https://mdbootstrap.com/img/Photos/Others/images/76.jpg");
 }
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+  background-color: #8064A2;
+  border-color: #8064A2;
+
+  &:hover {
+    background-color: transparent;
+    border: 2px solid #8e44ad;
+    color: #8e44ad;
+  }
+}

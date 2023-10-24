@@ -3,7 +3,7 @@ import styled from "styled-components";
 import "./Game.css"
 import gameContext from "../../gameContext";
 import gameService from "../../services/gameService/GameService";
-import socketService from "../../services/socketService";
+import socketService from "../../services/socketService/SocketService";
 
 
 const RowContainer = styled.div`

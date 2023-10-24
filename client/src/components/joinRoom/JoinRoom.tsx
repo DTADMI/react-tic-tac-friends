@@ -2,7 +2,7 @@ import React, {useContext, useRef, useState} from "react";
 import styled from "styled-components";
 import gameContext from "../../gameContext";
 import gameService from "../../services/gameService/GameService";
-import socketService from "../../services/socketService";
+import socketService from "../../services/socketService/SocketService";
 import {Button, Card, Form} from "react-bootstrap";
 import "./JoinRoom.css";
 
