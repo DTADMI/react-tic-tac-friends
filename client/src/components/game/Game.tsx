@@ -80,9 +80,7 @@ export function Game() {
     setGameStarted,
     isGameRestarting,
     setGameRestarting,
-    gameMessage,
     setGameMessage,
-    isInRoom,
     setInRoom,
   } = useContext(gameContext);
 
@@ -252,19 +250,19 @@ export function Game() {
 
   useEffect(() => {
     if(!isGameStarted) {
-      setGameMessage("Waiting for the other player to join the room...")
+      setGameMessage("Waiting for the other player to join the room...");
     } else if (!isGameOver) {
       if(isPlayerTurn) {
-        setGameMessage("Your turn to play!!!")
+        setGameMessage("Your turn to play!!!");
       } else {
-        setGameMessage("Wait for your opponent's turn to play!!!")
+        setGameMessage("Wait for your opponent's turn to play!!!");
       }
     }
-  },[isGameStarted, isPlayerTurn, isGameOver])
+  },[isGameStarted, isPlayerTurn, isGameOver]);
 
   const playTurn = (column: string | null) => {
     if(!column || column === "null"){
-      return null
+      return null;
     }
     return column === "x" ? ( <X /> ) : ( <O /> );
   }

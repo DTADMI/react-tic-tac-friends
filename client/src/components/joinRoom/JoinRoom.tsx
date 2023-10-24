@@ -11,7 +11,7 @@ export function JoinRoom(props: IJoinRoomProps) {
   const roomIdRef = useRef<HTMLInputElement>(null);
   const [isJoining, setJoining] = useState(false);
 
-  const { setInRoom, isInRoom } = useContext(gameContext);
+  const { setInRoom } = useContext(gameContext);
 
   const joinRoom = async (e: React.FormEvent) => {
     e.preventDefault();
