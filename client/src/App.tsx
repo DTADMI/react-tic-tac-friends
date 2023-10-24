@@ -1,17 +1,18 @@
 import React, {useEffect, useMemo, useState} from "react";
-import styled from "styled-components";
 import "./App.css";
 import socketService from "./services/socketService/SocketService";
 import { JoinRoom } from "./components/joinRoom/JoinRoom";
-import GameContext, { IGameContextProps } from "./gameContext";
+import GameContext, { IGameContextProps } from "./contexts/GameContext";
 import { Game } from "./components/game/Game";
 import {Button, Container} from "react-bootstrap";
 
 function App() {
   const [isInRoom, setInRoom] = useState(false);
+  const [isGameRestarting, setGameRestarting] = useState(false);
   const [playerSymbol, setPlayerSymbol] = useState<"x" | "o">("x");
   const [isPlayerTurn, setPlayerTurn] = useState(false);
   const [isGameStarted, setGameStarted] = useState(false);
+  const [gameMessage, setGameMessage] = useState("This is Tic-Tac-Friends");//Waiting for Other Players to Join to Start the Game!
 
   const connectSocket = async () => {
     const socket = await socketService
@@ -25,34 +26,41 @@ function App() {
     connectSocket();
   }, []);
 
-  const handleReplay = () => {
-
-  }
-
   const gameContextValue: IGameContextProps = useMemo(() => ({
     isInRoom,
     setInRoom,
+    isGameRestarting,
+    setGameRestarting,
     playerSymbol,
     setPlayerSymbol,
     isPlayerTurn,
     setPlayerTurn,
     isGameStarted,
     setGameStarted,
-  }), [isInRoom, playerSymbol, isPlayerTurn, isGameStarted]);
+    gameMessage,
+    setGameMessage
+  }), [isInRoom, isGameRestarting, playerSymbol, isPlayerTurn, isGameStarted, gameMessage]);
+
+  const handleReplay = () => {
+    setGameRestarting(true);
+  }
 
   return (
     <GameContext.Provider value={gameContextValue}>
       <div className="wrapperContainer">
-        <h1 className="homeText">🧠🫱🏿‍🫲🏽❣️ This is Tic-Tac-Friends 💙🤌🏿🌈</h1>
+        <h1 className="homeText">🧠🫱🏿‍🫲🏽❣️ {gameMessage} 💙🤌🏿🌈</h1>
         <div className="mainContainer d-grid gap-1">
           {!isInRoom && <JoinRoom />}
           {isInRoom &&
               <Container
                   className="d-flex align-items-center justify-content-center"
                   style={{ minHeight: "100vh"}}>
-                <div className="d-grid" style={{ maxWidth: "400px"}}>
+                <div className="d-grid mt-2" style={{ maxWidth: "400px"}}>
+                  {/*<div className="w-100 h-10 p-3 mb-1 badge bg-primary text-wrap" style={{ maxWidth: "80%"}}>
+                    {gameMessage}
+                  </div>*/}
                   <Game />
-                  <Button className="w-20 m-5" variant="primary" onClick={() => handleReplay()}>
+                  <Button className="w-20 m-2" variant="primary" onClick={() => handleReplay()}>
                     Play again
                   </Button>
                 </div>

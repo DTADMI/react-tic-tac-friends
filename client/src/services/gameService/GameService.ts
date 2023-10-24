@@ -27,11 +27,11 @@ class GameService {
   ) {
     socket.on("start_game", listener);
   }
-  public async onGameStop(
+  public async onPlayerDisconnected(
     socket: Socket,
     listener: (options: IStopGame) => void
   ) {
-    socket.on("player_disconnected", listener);
+    socket.on("on_player_disconnected", listener);
   }
 
   public async gameWin(socket: Socket, message: string) {
@@ -40,6 +40,14 @@ class GameService {
 
   public async onGameWin(socket: Socket, listener: (message: string) => void) {
     socket.on("on_game_win", ({ message }) => listener(message));
+  }
+
+  public async gameRestarting(socket: Socket, message: string) {
+    socket.emit("game_restarting", { message });
+  }
+
+  public async onGameRestarting(socket: Socket, listener: (message: string) => void) {
+    socket.on("on_game_restarting", ({ message }) => listener(message));
   }
 }
 

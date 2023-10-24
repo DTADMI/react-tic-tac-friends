@@ -1,6 +1,5 @@
 import React, {useContext, useRef, useState} from "react";
-import styled from "styled-components";
-import gameContext from "../../gameContext";
+import gameContext from "../../contexts/GameContext";
 import gameService from "../../services/gameService/GameService";
 import socketService from "../../services/socketService/SocketService";
 import {Button, Card, Form} from "react-bootstrap";

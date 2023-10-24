@@ -29,4 +29,14 @@ export class GameController {
     const gameRoom = this.getSocketGameRoom(socket);
     socket.to(gameRoom).emit("on_game_win", message);
   }
+  @OnMessage("game_restarting")
+  public async gameRestarting(
+    @SocketIO() io: Server,
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() message: any
+  ) {
+    console.log("game_restarting", message);
+    const gameRoom = this.getSocketGameRoom(socket);
+    socket.to(gameRoom).emit("on_game_restarting", message);
+  }
 }
