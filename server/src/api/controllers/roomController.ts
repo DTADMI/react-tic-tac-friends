@@ -16,7 +16,6 @@ export class RoomController {
     @MessageBody() message: any
   ) {
     console.log("New User joining room: ", message);
-    console.table(socket.rooms);
 
     const connectedSockets = io.sockets.adapter.rooms.get(message.roomId);
     const socketRooms = Array.from(socket.rooms.values()).filter(
@@ -27,8 +26,6 @@ export class RoomController {
       socketRooms.length > 0 ||
       (connectedSockets && connectedSockets.size === 2)
     ) {
-      console.table(socketRooms);
-      console.table(connectedSockets);
       socket.emit("room_join_error", {
         error: "Room is full please choose another room to play!",
       });
